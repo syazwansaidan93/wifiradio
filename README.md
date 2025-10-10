@@ -233,11 +233,3 @@ This project is provided as-is. Add your preferred license (MIT/Apache-2.0) to t
 
 ---
 
-If you want, I can:
-
-- Add example `config.json` to the repo.
-- Create a `systemd` unit file and example `platformio.ini` or `arduino` instructions.
-- Translate the README to Malay.
-
-Tell me which of those you'd like and I'll update the canvas document.
-
