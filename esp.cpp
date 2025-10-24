@@ -464,6 +464,15 @@ void sleepTask(void *parameter) {
 
 	i2s_driver_uninstall(I2S_NUM);
 
+	gpio_config_t stream_out_config = {
+		.pin_bit_mask = (1ULL << GPIO_STREAM_IND_PIN),
+		.mode = GPIO_MODE_OUTPUT,
+		.pull_up_en = GPIO_PULLUP_DISABLE,
+		.pull_down_en = GPIO_PULLDOWN_DISABLE,
+		.intr_type = GPIO_INTR_DISABLE,
+	};
+	gpio_config(&stream_out_config);
+
 	gpio_set_level(GPIO_STATE_IND_PIN, 1);
 	gpio_set_level(GPIO_STREAM_IND_PIN, 0);
 	gpio_hold_en(GPIO_STREAM_IND_PIN);
@@ -496,7 +505,7 @@ void setup() {
 	gpio_config(&ind_io_config);
 
 	gpio_set_level(GPIO_STATE_IND_PIN, 0);
-	gpio_set_level(GPIO_STREAM_IND_PIN, 1);
+	gpio_set_level(GPIO_STREAM_IND_PIN, 0);
 
 	gpio_config_t io_config = {
 		.pin_bit_mask = (1ULL << GPIO_SENSOR_PIN),
@@ -550,6 +559,15 @@ void setup() {
 
 	i2s_driver_install(I2S_NUM, &i2s_config, 0, NULL);
 	i2s_set_pin(I2S_NUM, &pin_config);
+
+	gpio_config_t stream_in_config = {
+		.pin_bit_mask = (1ULL << GPIO_STREAM_IND_PIN),
+		.mode = GPIO_MODE_INPUT,
+		.pull_up_en = GPIO_PULLUP_DISABLE,
+		.pull_down_en = GPIO_PULLDOWN_DISABLE,
+		.intr_type = GPIO_INTR_DISABLE,
+	};
+	gpio_config(&stream_in_config);
 
 	xTaskCreate(
 		audioReadTask,
